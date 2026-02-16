@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advanced Investment Interest Calculator</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app">
+    <header>
+      <h1>Advanced Investment Interest Calculator</h1>
+      <p>Model compound growth with contributions, withdrawals, fees, taxes, and inflation adjustment.</p>
+    </header>
+
+    <section class="card grid-form">
+      <h2>Scenario Setup</h2>
+      <form id="calculator-form">
+        <div class="grid">
+          <label>Initial Investment ($)
+            <input type="number" id="initial" min="0" step="0.01" value="10000" required />
+          </label>
+
+          <label>Investment Length (years)
+            <input type="number" id="years" min="1" max="100" step="1" value="20" required />
+          </label>
+
+          <label>Annual Return / APR (%)
+            <input type="number" id="apr" step="0.01" value="7" required />
+          </label>
+
+          <label>Compounding
+            <select id="compounding">
+              <option value="daily">Daily</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly" selected>Monthly</option>
+              <option value="quarterly">Quarterly</option>
+              <option value="annually">Annually</option>
+              <option value="continuous">Continuous (daily approximation)</option>
+            </select>
+          </label>
+
+          <label>Annual Fee / Expense Ratio (%)
+            <input type="number" id="feeRate" step="0.01" value="0" min="0" />
+          </label>
+
+          <label>Tax Rate on Interest (%)
+            <input type="number" id="taxRate" step="0.01" value="0" min="0" />
+          </label>
+
+          <label>Inflation Rate (%)
+            <input type="number" id="inflation" step="0.01" value="2.5" min="0" />
+          </label>
+        </div>
+
+        <h3>Recurring Contributions</h3>
+        <div class="grid">
+          <label>Contribution Amount ($)
+            <input type="number" id="contribAmount" step="0.01" value="500" min="0" />
+          </label>
+
+          <label>Contribution Frequency
+            <select id="contribFreq">
+              <option value="none">None</option>
+              <option value="weekly">Weekly</option>
+              <option value="biweekly">Biweekly</option>
+              <option value="monthly" selected>Monthly</option>
+              <option value="quarterly">Quarterly</option>
+              <option value="annually">Annually</option>
+            </select>
+          </label>
+
+          <label>Contribution Timing
+            <select id="contribTiming">
+              <option value="start" selected>Beginning of interval</option>
+              <option value="end">End of interval</option>
+            </select>
+          </label>
+
+          <label>Contribution Start Delay (months)
+            <input type="number" id="contribDelay" min="0" step="1" value="0" />
+          </label>
+
+          <label>Contribution Annual Growth (%)
+            <input type="number" id="contribGrowth" step="0.01" value="0" />
+          </label>
+        </div>
+
+        <h3>Recurring Withdrawals</h3>
+        <div class="grid">
+          <label>Withdrawal Amount ($)
+            <input type="number" id="withdrawAmount" step="0.01" value="0" min="0" />
+          </label>
+
+          <label>Withdrawal Frequency
+            <select id="withdrawFreq">
+              <option value="none" selected>None</option>
+              <option value="monthly">Monthly</option>
+              <option value="quarterly">Quarterly</option>
+              <option value="annually">Annually</option>
+            </select>
+          </label>
+
+          <label>Withdrawal Timing
+            <select id="withdrawTiming">
+              <option value="start">Beginning of interval</option>
+              <option value="end" selected>End of interval</option>
+            </select>
+          </label>
+
+          <label>Withdrawal Start Delay (months)
+            <input type="number" id="withdrawDelay" min="0" step="1" value="0" />
+          </label>
+
+          <label>Withdrawal Annual Growth (%)
+            <input type="number" id="withdrawGrowth" step="0.01" value="0" />
+          </label>
+        </div>
+
+        <div class="actions">
+          <button type="submit">Calculate</button>
+          <button type="button" id="exportCsv">Export yearly schedule (CSV)</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Results</h2>
+      <div id="kpis" class="kpi-grid"></div>
+      <canvas id="growthChart" width="1000" height="360" aria-label="Balance growth chart"></canvas>
+      <div class="table-wrap">
+        <table id="yearlyTable">
+          <thead>
+            <tr>
+              <th>Year</th>
+              <th>Starting Balance</th>
+              <th>Contributions</th>
+              <th>Withdrawals</th>
+              <th>Interest (gross)</th>
+              <th>Fees</th>
+              <th>Taxes</th>
+              <th>Ending Balance</th>
+              <th>Real Ending Value</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
